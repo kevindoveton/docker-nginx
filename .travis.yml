@@ -1,0 +1,17 @@
+sudo: required
+services:
+- docker
+language: generic
+env:
+  global:
+  - DOCKER_URL="docker.kdoveton.com/"
+  - DOCKER_REPO=generic/nginx-proxy
+  - DOCKER_TAG=latest
+  - secure: pKfNS+sVAiEXV/Y4DWluCBS2ADsxJwTwtG869vxjJyI0JV8KDHPHNtTeRsXnwr3WSJu6Sbw6mia6lVTXiP8NRKcL6EhDf8zR748a7Phj7MKl+PZKwIhVBC3twvherdNQaeWyDqfs1klKhsxc5W3VDHl7sxmmkhjhtRYprf6a5W/5oaRDiW/k7P0mTZAzqW8dRqvZRv/vD0Q8mlBc2gFdxzNc7n4uoGjDa5LCN/Zj+3jEtfATvIZdIGKvqE7BgZQSMLvo/wgni6FdBKy6sCp9Tg65/KQzlYPu9Kf6hcDCvtHeiQSXWIuMPL1u/ShSIKkrHYfEZ4/AMViVrANPqg+NaYL5mBCTs4FZe4efQYqcjl24GfYLpf7aO1Ce9DxektdzsHv7mVR9Is7Blq271NMOSToAF0zLqT/VMnOSF8t9ULGkuIGCNTEl8j3rWh1vGC831QatNSd6ALHSwSHa6I8/3yMyTGALobbttE4aanZpbN1phq3Q4E4R1Qt5FRiGPqBhcOaDdnx2rueeNHO0pDz6QDo08md29JdnNNb0KZuSyyjZ2ohf4J7yEMWGAYILzRyZgj0W70ZIrX3yFgxG0oWoicBVOeC8JZSSMhN7Nwv/kZkK0iMpuUHf4v6nga7YweTCvpJXap6erdupEZdjB37M4lXCxpkCQKfi0QpFwMKfMHU=
+  - secure: cY8L2OdbOMNKDA+Twm4tNeW8UvaDiYsX9ihaCFK9Eb71q/6ug0cMyINBr2fiijy8R/yW32uT/q9ig3VX5hJ1qQHzVBf4BDH4JbhAMdctjJWBUC0uS9lYhva1Vig7WXDz05LPEUwFImGWNX0d2m3RKohriTcgoOzfNe+aWsBD/R99Z2efLZxPYugzXca59xfWfxVTvXLVr9CcVZh0GabdF4prZTqAuFdEVmxdIWzQE7QZLqL0JHPTERZaAiq9NmpSRMjfqga+ZrK1Xyrfyae/pz/9FOf0NJpzYbgF5gPB7vm5NlcZlOqGzwEj6vgzSua7cJM/VtQq3i9ZVskEyEA0clwL7p6sjcWkwcNjYqWaD1FFUUyiEBV4tlA5/Bqc/H3j3/1upzjuyokUj16SDuQX1BxZeQNJz7+LRUidEhM+E3qKqnmQ650CP1ePaEYz8YW/Y9f6MrtwGGY86pO0rxfQYHglOolCDefBRHmgJv/I63UbDeTOmhOnmYWWaFEwdjDs0RP8iTOZ85SS5l2qvVlDMU3/BjIGM0p+l7OINBxq/zD3MEBvx/AIDMPkvGhGCGQYn27lSI0XGQHRugSBR1wa6eiw6lhaf2Qzpq1zr9A1soiQqS+t55nixIgX4+lTJhJ3sfgaUMEiZJUFV/GhMhFbjkLhC0DLfyS2fc4hjrZ0lhk=
+script:
+- if [ "$TRAVIS_BRANCH" == "master" ]; then docker build -t $DOCKER_URL$DOCKER_REPO\:$DOCKER_TAG
+  .; fi
+- if [ "$TRAVIS_BRANCH" == "master" ]; then docker login $DOCKER_URL -u="$DOCKER_USERNAME"
+  -p="$DOCKER_PASSWORD"; docker push $DOCKER_URL$DOCKER_REPO\:$DOCKER_TAG;
+  fi
